@@ -3,12 +3,18 @@ const express = require('express');
 const app = express();
 
 const { config } = require('../config');
+const databaseConnection = require('../config/databseConnection');
 
 
 // MDW
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
 app.use(express.static(__dirname + '/public'));
+
+// DB
+( async () => {
+    await databaseConnection.connect();
+})();
 
 // CORS
 app.use(cors(config.cors));
