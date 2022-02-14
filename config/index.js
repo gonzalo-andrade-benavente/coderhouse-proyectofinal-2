@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const config = {
     port: process.env.PORT || 8080 ,
-    cors: process.env.CORS ,
+    cors: `${process.env.CORS}` ,
 }
 
 const databaseConfig = {

@@ -5,6 +5,8 @@ const app = express();
 const { config } = require('../config');
 const databaseConnection = require('../config/databseConnection');
 
+const productRouter = require('../routes/product');
+
 
 // MDW
 app.use(express.json());
@@ -19,6 +21,8 @@ app.use(express.static(__dirname + '/public'));
 // CORS
 app.use(cors(config.cors));
 
+//
+app.use('/product', productRouter);
 
 app.get('/*', (req, res) => {
     res.json({
