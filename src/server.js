@@ -24,10 +24,15 @@ app.use(cors(config.cors));
 //
 app.use('/product', productRouter);
 
-app.get('/*', (req, res) => {
+app.use('/healthcheck', (req, res) => {
     res.json({
-        error: -2,
-        descripcion: 'ruta incorrecta'
+        message: 'healthcheck ok!'
+    });
+});
+
+app.get('/*', (req, res) => {
+    res.status(403).json({
+        message: 'Wrong route'
     });
 });
 
