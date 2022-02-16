@@ -7,7 +7,6 @@ const databaseConnection = require('../config/databseConnection');
 
 const productRouter = require('../routes/product');
 
-
 // MDW
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
@@ -22,7 +21,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(cors(config.cors));
 
 //
-app.use('/product', productRouter);
+app.use('/api/product', productRouter);
 
 app.use('/healthcheck', (req, res) => {
     res.json({
