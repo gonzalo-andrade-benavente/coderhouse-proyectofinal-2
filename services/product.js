@@ -6,6 +6,7 @@ const getProductById = async (id) => {
     let result;
     
     try {
+
         const product = await ProductModel.findById(id);
         result = {
             error: false ,
@@ -28,7 +29,7 @@ const getProducts = async () => {
     let result;
 
     try {
-        const products = await ProductModel.find({}).sort( { "timestamp": 0 } );
+        const products = await ProductModel.find({}).sort( { "timestamp": -1 } );
         result = {
             error: false ,
             data: products ,
@@ -59,9 +60,38 @@ const postProduct = async (product) => {
     return response;
 }
 
+const deleteProductById = async (id) => {
+    let result, response;
+
+    try {
+        result = await ProductModel.findByIdAndDelete(id);
+        response = new Response(false, result, undefined);
+    }catch(err) {
+        response = new Response(true, undefined, `${err.name} - ${err.message}`);
+    }
+
+    return response;
+}
+
+const putProductById = async (id, product) => {
+    let result, response;
+
+    try {
+        result = await ProductModel.findByIdAndUpdate(id, product, { new: true });
+        response = new Response(false, result, undefined);
+    }catch(err) {
+        response = new Response(true, undefined, `${err.name} - ${err.message}`);
+    }
+
+    return response;
+
+}
+
 module.exports = {
+    deleteProductById ,
     getProductById ,
     getProducts ,
     postProduct ,
+    putProductById ,
 }
 

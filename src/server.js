@@ -6,6 +6,7 @@ const { config } = require('../config');
 const databaseConnection = require('../config/databseConnection');
 
 const productRouter = require('../routes/product');
+const cartRouter = require('../routes/cart');
 
 // MDW
 app.use(express.json());
@@ -20,8 +21,9 @@ app.use(express.static(__dirname + '/public'));
 // CORS
 app.use(cors(config.cors));
 
-//
-app.use('/api/product', productRouter);
+// Routers
+app.use('/api/productos', productRouter);
+app.use('/api/carritos', cartRouter);
 
 app.use('/healthcheck', (req, res) => {
     res.json({
