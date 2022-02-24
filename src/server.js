@@ -3,10 +3,12 @@ const express = require('express');
 const app = express();
 
 const { config } = require('../config');
-const databaseConnection = require('../config/databseConnection');
+const databaseConnection = require('../config/databaseConnection');
 
 const productRouter = require('../routes/product');
 const cartRouter = require('../routes/cart');
+
+const serverRoutes = require('../routes');
 
 // MDW
 app.use(express.json());
@@ -22,10 +24,12 @@ app.use(express.static(__dirname + '/public'));
 app.use(cors(config.cors));
 
 // Routers
+serverRoutes(app);
+
 app.use('/api/productos', productRouter);
 app.use('/api/carritos', cartRouter);
 
-app.use('/healthcheck', (req, res) => {
+app.get('/healthcheck', (req, res) => {
     res.json({
         message: 'healthcheck ok!'
     });

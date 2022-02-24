@@ -1,16 +1,27 @@
-const Router = require('express');
+const productRouter = require('../components/products/');
 
-const router = Router();
+module.exports = (app) => {
 
-router.get('', () => {
+    productRouter(app);
+    
+    app.get('/', (req, res) => {
+        res.json({
+            message: 'ok'
+        });
+    });
 
-});
-
-
-module.exports = {
-    router
+    app.get('/healthcheck', (req, res) => {
+        res.json({
+            message: 'healthcheck ok!'
+        });
+    });
+    
+    app.get('/*', (req, res) => {
+        res.status(403).json({
+            message: 'Wrong route'
+        });
+    });
 }
-
 
 
 
