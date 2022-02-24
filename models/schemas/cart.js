@@ -7,7 +7,8 @@ let products = Joi.array();
 
 const cartSchema = {
     timestamp
-    , products: [ productSchema ]
+    //, products: [ productSchema ]
+    , products: [ ]
 }
 
 module.exports = {
