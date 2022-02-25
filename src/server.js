@@ -26,20 +26,8 @@ app.use(cors(config.cors));
 // Routers
 serverRoutes(app);
 
-app.use('/api/productos', productRouter);
-app.use('/api/carritos', cartRouter);
-
-app.get('/healthcheck', (req, res) => {
-    res.json({
-        message: 'healthcheck ok!'
-    });
-});
-
-app.get('/*', (req, res) => {
-    res.status(403).json({
-        message: 'Wrong route'
-    });
-});
+//app.use('/api/productos', productRouter);
+//app.use('/api/carritos', cartRouter);
 
 const server = app.listen(config.port, () => {
     console.log(`Server listening in port: ${config.port}`);

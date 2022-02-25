@@ -8,6 +8,6 @@ module.exports = (app) => {
     
     app.use('/api/productos', router);
 
-    router.get('/', productController.getProduct);
+    router.get('/:id?', productController.getProduct);
 
 }

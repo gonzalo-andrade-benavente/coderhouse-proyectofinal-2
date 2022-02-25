@@ -1,10 +1,15 @@
+const productService = require('../services/productService');
+
 
 class Product {
     
     async getProduct(req, res) {
-        res.send({
-            msg: 'getProduct' ,
-        });
+
+        const { id } = req.params;
+
+        const result = id !== undefined ? await productService.getProductDb(id) : await productService.getProductsDb();
+        
+        res.send(result);
     }
     
 }
