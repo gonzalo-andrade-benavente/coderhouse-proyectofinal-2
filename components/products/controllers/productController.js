@@ -30,6 +30,20 @@ class Product {
 
         res.send(result);
     }
+
+    async putProduct(req, res) {
+
+        const { id } = req.params;
+
+        const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
+
+        const product = new ProductUtil(nombre, descripcion, codigo, foto, precio, stock);
+
+        const result = await productService.putProductDB(id, product);
+
+        res.send(result);
+
+    }
     
 }
 

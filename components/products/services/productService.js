@@ -53,6 +53,21 @@ class ProductService {
         } catch(err) {
             response = new Response(true, undefined, `${err.name} - ${err.message}`);
         }
+        
+        return response;
+    }
+
+    async putProductDB(id, product) {
+        let result, response;
+
+        try {
+            result =  await ProductModel.findByIdAndUpdate(id, product, { new: true} );
+            response = new Response(false, result, undefined);
+        } catch(err) {
+            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+        }
+
+        return response;
     }
 
 }

@@ -1,9 +1,11 @@
 const productRouter = require('../components/products/');
+const cartRouter = require('../components/carts/');
 
 module.exports = (app) => {
 
     productRouter(app);
-    
+    cartRouter(app);
+
     app.get('/', (req, res) => {
         res.json({
             message: 'ok'

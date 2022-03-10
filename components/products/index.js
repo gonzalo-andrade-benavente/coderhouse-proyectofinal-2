@@ -16,4 +16,5 @@ module.exports = (app) => {
 
     router.delete('/:id?', [ validaterRole ], productController.deleteProduct);
 
+    router.put('/:id?', [ validaterRole ], productController.putProduct);
 }
