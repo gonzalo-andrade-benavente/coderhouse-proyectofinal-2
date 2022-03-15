@@ -16,10 +16,10 @@ module.exports = (app) => {
 
     router.delete('/:id?', [ validateRole, validateId ] , cartController.deleteCart);
 
-    router.post('/:id/productos', [ validateRole ] , cartController.postCart);
+    router.post('/:id/productos', [ validateRole, validateId ] , cartController.postProduct);
 
-    router.get('/:id/productos', cartController.postCart);
+    router.get('/:id/productos', [ validateId ], cartController.getProduct);
 
-    router.delete('/:id/productos/:id_prod', [validateRole] , cartController.postCart);
+    router.delete('/:id/productos/:id_prod', [validateRole,  validateId] , cartController.deleteProduct);
 
 }
