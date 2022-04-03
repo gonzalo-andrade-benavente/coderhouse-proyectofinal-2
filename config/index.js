@@ -3,7 +3,7 @@ require('dotenv').config();
 const config = {
     port: process.env.PORT || 8080 ,
     cors: `${process.env.CORS}` ,
-    dev: process.env.NODE_ENV !== 'production',
+    dev: process.env.NODE_ENV !== 'production' ,
 }
 
 const databaseConfig = {
@@ -13,6 +13,14 @@ const databaseConfig = {
     database: process.env.MONGODB_DATABASE ,
 }
 
+const emailConfig = {
+    user: process.env.EMAIL_USER ,
+    pass: process.env.EMAIL_PASS ,
+    email: process.env.EMAIL_ADMIN ,
+    port: process.env.EMAIL_PORT ,
+    service: process.env.EMAIL_SERVICE ,
+}
+
 module.exports = {
-    config, databaseConfig
+    config, databaseConfig, emailConfig
 }
