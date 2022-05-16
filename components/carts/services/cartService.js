@@ -1,75 +1,73 @@
-const { CartModel } = require('../../../models/Cart');
+//const { CartModel } = require('../../../models/Cart');
+const CartDao  = require('./../../../models/CartDaosFactory');
 const Response = require('../../../utils/Response');
 
 class CartService {
 
     async postCartDb() {
-        let result, response;
+        let result;
+
         try {
-            result = await CartModel.create({
-                timestamp: Date.now() ,
-            });
-            response = new Response(false, result, undefined);
-        } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            result = await CartDao.create();
+        } catch(err) {
+            console.log(err);
         }
 
-        return response;
+        return result;
     }
 
     async deleteCartDb(id) {
-        let result, response;
+        let result;
+
         try {
-            result =  result = await CartModel.findByIdAndDelete(id);
-            response = new Response(false, result, undefined);
-        } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            result = await CartDao.deleteById(id);
+        } catch(err) {
+           console.log(err);
         }
 
-        return response;
+        return result;
     }
 
     async postProductDb(id, id_prod) {
-        let result, response;
+        let result;
         try {
-            //result = { product: 'holaaaaaaa', id, id_prod};
-            result = await CartModel.findById(id);
-            result.products = [...result.products, id_prod];
-            await result.save();
-            response = new Response(false, result, undefined);
-        } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            const cart = await CartDao.getById(id);
+            cart.products  =  [...cart.products, id_prod];
+            await cart.save();  
+            result = new Response(false, cart, undefined);  
+        } catch(err) {
+            result = new Response(true, undefined, `${err.name} - ${err.message}`);
         }
 
-        return response;
+        return result;
+
     }
 
     async getProductDb(id) {
-        let result, response;
+        let result;
         try {
-            result = result = await CartModel.findById(id);
-            response = new Response(false, result, undefined);
+            const cart = await CartDao.getById(id);
+            result = new Response(false, cart, undefined);
         } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            result = new Response(true, undefined, `${err.name} - ${err.message}`);
         }
 
-        return response;
+        return result;
     }
 
     async deleteProductDb(id, id_prod) {
-        let result, response, products;
-        try {
-            result = await CartModel.findById(id);
-            //products = result.products.filter(prd => prd._id.toString() !== id_prod);
-            products = result.products.filter(prd => prd !== id_prod);
-            result.products =  products;
-            await result.save();
-            response = new Response(false, result, undefined);
-        } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
-        }
+        let result;
 
-        return response;
+        try {
+            const cart = await CartDao.getById(id);
+            const products = cart.products.filter(prd => prd !== id_prod);
+            cart.products = products;  
+            await cart.save();
+            result = new Response(false, cart, undefined);  
+        } catch(err) {
+            result = new Response(true, undefined, `${err.name} - ${err.message}`);
+        }
+        return result;
     }
 
 

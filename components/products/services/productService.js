@@ -1,54 +1,51 @@
-const { ProductModel } = require('../../../models/Product');
+//const { ProductModel } = require('../../../models/Product');
 const Response = require('../../../utils/Response');
+const ProductDao = require('../../../models/ProductDaosFactory');
 
 class ProductService {
     
     async getProductDb(id) {
         
-        let result, response;
+        let result;
         
         try {
-            //result = await ProductModel.findById(id);
-            result = await ProductModel.find({ borrado:false, _id:id });
-            response = new Response(false, result, undefined);
+            result = await ProductDao.getById(id);
         } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            consolr.log(err);
         }
 
-        return response;
+        return result;
     }
 
     async getProductsDb() {
-        let result, response;
+        let result;
         
         try {
-            result = await ProductModel.find({ borrado: false});
-            response = new Response(false, result, undefined);
+            result = await ProductDao.getAll();
         } catch (err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            console.log(err);
         }
 
-        return response;
+        return result;
     }
 
     async postProductDb(product) {
-        let result, response;
+        let result;
 
         try {
-            result = await ProductModel.create(product);
-            response = new Response(false, result, undefined);
+            result = await ProductDao.create(product);
         } catch(err) {
-            response = new Response(true, undefined, `${err.name} - ${err.message}`);
+            console.log(err);
         }
 
-        return response;
+        return result;
     }
 
     async deleteProductDB(id) {
         let result, response;
 
         try {
-            result = await ProductModel.findByIdAndUpdate(id, { borrado:true });
+            //result = await ProductModel.findByIdAndUpdate(id, { borrado:true });
             response = new Response(false, result, undefined);
         } catch(err) {
             response = new Response(true, undefined, `${err.name} - ${err.message}`);
@@ -61,7 +58,7 @@ class ProductService {
         let result, response;
 
         try {
-            result =  await ProductModel.findByIdAndUpdate(id, product, { new: true} );
+            //result =  await ProductModel.findByIdAndUpdate(id, product, { new: true} );
             response = new Response(false, result, undefined);
         } catch(err) {
             response = new Response(true, undefined, `${err.name} - ${err.message}`);
